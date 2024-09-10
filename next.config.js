@@ -15,6 +15,9 @@ const nextConfig = {
       },
     ];
   },
+  // Add this to ensure proper asset handling on Vercel
+  output: 'standalone',
 };
 
-export default nextConfig;
+// Use module.exports instead of export default
+module.exports = nextConfig;

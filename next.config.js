@@ -1,16 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/traderschool' : '',
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          { key: 'X-Frame-Options', value: 'ALLOWALL' },
-        ],
-      },
-    ];
+  images: {
+    domains: ['images.unsplash.com'],
+    unoptimized: true, // This allows image optimization to be handled by Vercel
   },
-};
+  // Remove the conditional output: 'export' as it's not needed for Vercel deployment
+}
 
-export default nextConfig;
+// Add support for SVG files
+nextConfig.webpack = (config) => {
+  config.module.rules.push({
+    test: /\.svg$/,
+    use: ['@svgr/webpack']
+  });
+
+  return config;
+}
+
+module.exports = nextConfig

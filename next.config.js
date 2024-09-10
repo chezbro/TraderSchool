@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/traderschool',
   images: {
     domains: ['images.unsplash.com'],
     unoptimized: true, // This allows image optimization to be handled by Vercel
   },
-  // Remove the conditional output: 'export' as it's not needed for Vercel deployment
+  assetPrefix: '/traderschool',
 }
 
 // Add support for SVG files

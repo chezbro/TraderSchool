@@ -1,13 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['images.unsplash.com'],
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/traderschool' : '',
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'ALLOWALL' },
+        ],
+      },
+    ];
   },
-}
+};
 
-// Conditionally add the 'output: export' for production builds
-if (process.env.NODE_ENV === 'production') {
-  nextConfig.output = 'export'
-}
-
-module.exports = nextConfig
+export default nextConfig;

@@ -1,21 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/traderschool',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/traderschool' : '',
   images: {
     domains: ['images.unsplash.com'],
     unoptimized: true, // This allows image optimization to be handled by Vercel
   },
-  assetPrefix: '/traderschool',
-}
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'ALLOWALL' },
+        ],
+      },
+    ];
+  },
+};
 
-// Add support for SVG files
-nextConfig.webpack = (config) => {
-  config.module.rules.push({
-    test: /\.svg$/,
-    use: ['@svgr/webpack']
-  });
-
-  return config;
-}
-
-module.exports = nextConfig
+export default nextConfig;
